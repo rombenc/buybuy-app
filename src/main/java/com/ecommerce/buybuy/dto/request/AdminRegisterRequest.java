@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class AdminRegisterRequest extends UserRegisterRequest {
-    @NotBlank(message = "Employee ID is required")
+    @NotNull(message = "Employee ID is required")
     private Long employeeId;
-    @NotBlank(message = "Department is required")
+    @NotNull(message = "Department is required")
     private String department;
     @NotNull(message = "Admin level is required")
     private AdminLevel adminLevel;

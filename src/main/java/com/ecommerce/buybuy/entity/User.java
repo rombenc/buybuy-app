@@ -36,7 +36,6 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "password", nullable = false)
-    @Min(8)
     private String password;
 
     @Column(name = "verification_code", nullable = true)
@@ -45,7 +44,7 @@ public class User implements UserDetails {
     @Column(name = "verification_expiration", nullable = true)
     private LocalDateTime verificationCodeExpiresAt;
 
-    private boolean isVerified;
+    public boolean isVerified = false;
 
     public String getUserType() {
         return null;

@@ -5,9 +5,7 @@ import com.ecommerce.buybuy.dto.request.CustomerRegisterRequest;
 import com.ecommerce.buybuy.dto.request.SellerRegisterRequest;
 import com.ecommerce.buybuy.dto.response.RegisterResponse;
 import com.ecommerce.buybuy.dto.response.WebResponse;
-import com.ecommerce.buybuy.service.Impl.AdminServiceImpl;
-import com.ecommerce.buybuy.service.Impl.CustomerServiceImpl;
-import com.ecommerce.buybuy.service.Impl.SellerServiceImpl;
+import com.ecommerce.buybuy.service.Impl.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,33 +16,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final CustomerServiceImpl customerRegistrationService;
-    private final SellerServiceImpl sellerRegistrationService;
-    private final AdminServiceImpl adminRegistrationService;
+    private final AuthServiceImpl authService;
 
     @PostMapping("/registercustomer")
     public WebResponse<RegisterResponse> registerCustomer(@Valid @RequestBody CustomerRegisterRequest request) {
-        return customerRegistrationService.registerCustomer(request);
+        return authService.registerCustomer(request);
     }
 
     @PostMapping("/registerseller")
     public WebResponse<RegisterResponse> registerSeller(@Valid @RequestBody SellerRegisterRequest request) {
-        return sellerRegistrationService.registerSeller(request);
+        return authService.registerSeller(request);
     }
 
     @PostMapping("/registeradmin")
     @PreAuthorize("hasRole('SUPER_ADMIN')")
     public WebResponse<RegisterResponse> registerAdmin(@Valid @RequestBody AdminRegisterRequest request) {
-        return adminRegistrationService.registerAdmin(request);
+        return authService.registerAdmin(request);
     }
 
-    @GetMapping("/verify")
-    public WebResponse<String> verifyEmail(@RequestParam String code) {
-        try {
-            // Implement verification logic
-            return new WebResponse<>(200, "Success", "Email verified successfully");
-        } catch (Exception e) {
-            return new WebResponse<>(400, e.getMessage(), null);
-        }
+    @PostMapping("/verify")
+    public ResponseEntity<WebResponse<String>> verifyAccount(@RequestParam String email, @RequestParam String code) {
+        return ResponseEntity.ok(authService.verifyAccount(email, code));
     }
 }

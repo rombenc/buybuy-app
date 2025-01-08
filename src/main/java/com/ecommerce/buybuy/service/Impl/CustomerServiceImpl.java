@@ -22,47 +22,14 @@ public class CustomerServiceImpl {
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
 
-    public WebResponse<RegisterResponse> registerCustomer(CustomerRegisterRequest request) {
-        try {
-            Customer newCustomer = buildCustomerFromRequest(request);
-            newCustomer.setVerificationCode(emailService.generateVerificationCode());
-            newCustomer.setVerified(false);
-
-            Customer savedCustomer = customerRepository.save(newCustomer);
-            emailService.sendVerificationEmail(savedCustomer);
-
-            RegisterResponse response = RegisterResponse.builder()
-                    .id(savedCustomer.getId())
-                    .email(savedCustomer.getEmail())
-                    .role("CUSTOMER")
-                    .message("Registration successful. Please verify your email.")
-                    .verificationCode(savedCustomer.getVerificationCode())
-                    .build();
-
-            return new WebResponse<>(200, "Success", response);
-        } catch (Exception e) {
-            return buildErrorResponse(e);
-        }
-    }
-
-    private Customer buildCustomerFromRequest(CustomerRegisterRequest request) {
-        Customer customer = new Customer();
-        customer.setEmail(request.getEmail());
-        customer.setPassword(passwordEncoder.encode(request.getPassword()));
-        customer.setFirstName(request.getFirstName());
-        customer.setLastName(request.getLastName());
-        customer.setPhoneNumber(request.getPhoneNumber());
-        customer.setShippingAddress(request.getShippingAddress());
-
-        ShoppingCart cart = new ShoppingCart();
-        cart.setCustomer(customer);
-        customer.setShoppingCart(cart);
-
-        return customer;
-    }
 
     private <T> WebResponse<T> buildErrorResponse(Exception e) {
         return new WebResponse<>(500, "Error: " + e.getMessage(), null);
     }
+
+    //todo: create get all product
+    //todo: checkout and payment
+    //todo: get shop
+    //todo: delete account or deactivate account
 }
 
