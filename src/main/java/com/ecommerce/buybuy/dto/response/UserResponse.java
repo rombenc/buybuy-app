@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class LoginResponse {
+public class UserResponse {
     private String token;
     private String role;
     private String expirationTime;

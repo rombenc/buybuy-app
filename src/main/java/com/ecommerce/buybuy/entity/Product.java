@@ -13,7 +13,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String productId;
 
+    private String productCode;
+
     private String productName;
+
+    private String imageUrl;
 
     private Long price;
 
@@ -23,4 +27,8 @@ public class Product {
 
     @ManyToOne
     private Seller seller;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

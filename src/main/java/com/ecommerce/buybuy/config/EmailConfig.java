@@ -1,4 +1,4 @@
-package com.ecommerce.buybuy.service.email;
+package com.ecommerce.buybuy.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

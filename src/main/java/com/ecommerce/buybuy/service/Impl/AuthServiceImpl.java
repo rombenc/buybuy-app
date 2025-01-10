@@ -1,7 +1,7 @@
 package com.ecommerce.buybuy.service.Impl;
 
 import com.ecommerce.buybuy.dto.request.*;
-import com.ecommerce.buybuy.dto.response.LoginResponse;
+import com.ecommerce.buybuy.dto.response.UserResponse;
 import com.ecommerce.buybuy.dto.response.RefreshTokenResponse;
 import com.ecommerce.buybuy.dto.response.RegisterResponse;
 import com.ecommerce.buybuy.dto.response.WebResponse;
@@ -17,8 +17,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -117,14 +115,13 @@ public class AuthServiceImpl {
         }
     }
 
-    public WebResponse<LoginResponse> login(LoginRequest loginRequest) {
+    public WebResponse<UserResponse> login(LoginRequest loginRequest) {
         try {
             authenticateUser(loginRequest);
             User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow();
             String jwt = jwtService.generateToken(user);
-            String refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
 
-            LoginResponse response = LoginResponse.builder()
+            UserResponse response = UserResponse.builder()
                     .token(jwt)
                     .role(user.getUserType())
                     .expirationTime("24Hrs")
@@ -198,7 +195,7 @@ public class AuthServiceImpl {
         customer.setPhoneNumber(request.getPhoneNumber());
         customer.setShippingAddress(request.getShippingAddress());
 
-        ShoppingCart cart = new ShoppingCart();
+        Cart cart = new Cart();
         cart.setCustomer(customer);
         customer.setShoppingCart(cart);
 

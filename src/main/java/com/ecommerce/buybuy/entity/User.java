@@ -1,22 +1,25 @@
 package com.ecommerce.buybuy.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "users")
+@Table(name = "user")
 @DiscriminatorColumn(name = "user_type")
 @Getter
 @Setter
@@ -44,7 +47,16 @@ public class User implements UserDetails {
     @Column(name = "verification_expiration", nullable = true)
     private LocalDateTime verificationCodeExpiresAt;
 
+    @Column(name = "created_at")
+    private final LocalDateTime createdAt = LocalDateTime.now();
+
     public boolean isVerified = false;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<Payment> payments = new ArrayList<>();
+
 
     public String getUserType() {
         return null;

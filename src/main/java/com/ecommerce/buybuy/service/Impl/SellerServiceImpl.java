@@ -1,13 +1,6 @@
 package com.ecommerce.buybuy.service.Impl;
 
-import com.ecommerce.buybuy.dto.request.CustomerRegisterRequest;
-import com.ecommerce.buybuy.dto.request.SellerRegisterRequest;
-import com.ecommerce.buybuy.dto.response.RegisterResponse;
 import com.ecommerce.buybuy.dto.response.WebResponse;
-import com.ecommerce.buybuy.entity.Customer;
-import com.ecommerce.buybuy.entity.Seller;
-import com.ecommerce.buybuy.entity.ShoppingCart;
-import com.ecommerce.buybuy.repository.CustomerRepository;
 import com.ecommerce.buybuy.repository.SellerRepository;
 import com.ecommerce.buybuy.service.email.EmailService;
 import lombok.RequiredArgsConstructor;

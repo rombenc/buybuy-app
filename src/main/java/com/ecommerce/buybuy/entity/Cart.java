@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class ShoppingCart {
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -19,7 +19,11 @@ public class ShoppingCart {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "cart_id")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> items = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "payment_id", unique = true)
+    private Payment payment;
+
 }

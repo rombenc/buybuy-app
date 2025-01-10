@@ -1,8 +1,8 @@
 package com.ecommerce.buybuy.controller;
 
-import com.ecommerce.buybuy.dto.request.AdminRegisterRequest;
-import com.ecommerce.buybuy.dto.request.CustomerRegisterRequest;
-import com.ecommerce.buybuy.dto.request.SellerRegisterRequest;
+import com.ecommerce.buybuy.dto.request.*;
+import com.ecommerce.buybuy.dto.response.UserResponse;
+import com.ecommerce.buybuy.dto.response.RefreshTokenResponse;
 import com.ecommerce.buybuy.dto.response.RegisterResponse;
 import com.ecommerce.buybuy.dto.response.WebResponse;
 import com.ecommerce.buybuy.service.Impl.AuthServiceImpl;
@@ -37,5 +37,15 @@ public class AuthController {
     @PostMapping("/verify")
     public ResponseEntity<WebResponse<String>> verifyAccount(@RequestParam String email, @RequestParam String code) {
         return ResponseEntity.ok(authService.verifyAccount(email, code));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<WebResponse<UserResponse>> login(@RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<WebResponse<RefreshTokenResponse>> refreshToken(@RequestBody RefreshTokenRequest request) {
+        return ResponseEntity.ok(authService.refreshToken(request));
     }
 }
