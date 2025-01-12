@@ -1,5 +1,6 @@
 package com.ecommerce.buybuy.service.Impl;
 
+import com.ecommerce.buybuy.constant.UserType;
 import com.ecommerce.buybuy.dto.request.*;
 import com.ecommerce.buybuy.dto.response.UserResponse;
 import com.ecommerce.buybuy.dto.response.RefreshTokenResponse;
@@ -41,8 +42,9 @@ public class AuthServiceImpl {
 
             RegisterResponse response = RegisterResponse.builder()
                     .id(savedAdmin.getId())
+                    .fullName(savedAdmin.fullName())
                     .email(savedAdmin.getEmail())
-                    .role("ADMIN")
+                    .role(UserType.ADMIN)
                     .message("Registration successful. Please verify your email.")
                     .verificationCode(savedAdmin.getVerificationCode())
                     .build();
@@ -64,8 +66,9 @@ public class AuthServiceImpl {
 
             RegisterResponse response = RegisterResponse.builder()
                     .id(savedCustomer.getId())
+                    .fullName(savedCustomer.fullName())
                     .email(savedCustomer.getEmail())
-                    .role("CUSTOMER")
+                    .role(UserType.CUSTOMER)
                     .message("Registration successful. Please verify your email.")
                     .verificationCode(savedCustomer.getVerificationCode())
                     .build();
@@ -87,8 +90,9 @@ public class AuthServiceImpl {
 
             RegisterResponse response = RegisterResponse.builder()
                     .id(savedSeller.getId())
+                    .fullName(savedSeller.fullName())
                     .email(savedSeller.getEmail())
-                    .role("SELLER")
+                    .role(UserType.SELLER)
                     .message("Registration successful. Please verify your email.")
                     .verificationCode(savedSeller.getVerificationCode())
                     .build();
@@ -118,12 +122,13 @@ public class AuthServiceImpl {
     public WebResponse<UserResponse> login(LoginRequest loginRequest) {
         try {
             authenticateUser(loginRequest);
-            User user = userRepository.findByEmail(loginRequest.getEmail()).orElseThrow();
+            User user = userRepository.findByEmail(loginRequest.getEmail())
+                    .orElseThrow(()-> new RuntimeException("Wrong email or password"));
             String jwt = jwtService.generateToken(user);
 
             UserResponse response = UserResponse.builder()
                     .token(jwt)
-                    .role(user.getUserType())
+                    .role(user.getUserType().getRole())
                     .expirationTime("24Hrs")
                     .message("Successfully logged in")
                     .build();
@@ -178,7 +183,6 @@ public class AuthServiceImpl {
         seller.setStoreName(request.getStoreName());
         seller.setStoreDescription(request.getStoreDescription());
         seller.setBusinessRegistrationNumber(request.getBusinessRegistrationNumber());
-        seller.setBusinessAddress(request.getBusinessAddress());
         return seller;
     }
 
@@ -193,7 +197,6 @@ public class AuthServiceImpl {
         customer.setFirstName(request.getFirstName());
         customer.setLastName(request.getLastName());
         customer.setPhoneNumber(request.getPhoneNumber());
-        customer.setShippingAddress(request.getShippingAddress());
 
         Cart cart = new Cart();
         cart.setCustomer(customer);

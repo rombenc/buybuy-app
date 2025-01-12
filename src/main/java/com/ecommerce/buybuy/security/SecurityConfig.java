@@ -25,7 +25,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request-> request.requestMatchers("/auth/**", "/public/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/customer/**").hasAnyAuthority("CUSTOMER", "ADMIN")
+                        .requestMatchers("/customer/**", "/address/**").hasAnyAuthority("CUSTOMER", "ADMIN")
                         .requestMatchers("/seller/**").hasAnyAuthority("SELLER", "ADMIN")
                         .requestMatchers("/customer/register").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()

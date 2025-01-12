@@ -1,18 +1,14 @@
-package com.ecommerce.buybuy.entity;
+package com.ecommerce.buybuy.dto.response;
 
-import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "address")
-@Getter
 @Setter
-public class Address {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Getter
+@Builder
+public class AddressResponse {
     private Long id;
-
     private String street;
     private String city;
     private String state;

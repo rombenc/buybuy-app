@@ -1,5 +1,6 @@
 package com.ecommerce.buybuy.dto.response;
 
+import com.ecommerce.buybuy.constant.UserType;
 import lombok.*;
 
 @Data
@@ -8,8 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 public class RegisterResponse {
     private Long id;
+    private String fullName;
     private String email;
-    private String role;
+    private UserType role;
     private String message;
     private String verificationCode;
 }

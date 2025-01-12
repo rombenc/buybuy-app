@@ -1,5 +1,6 @@
 package com.ecommerce.buybuy.entity;
 
+import com.ecommerce.buybuy.constant.UserType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +20,12 @@ public class Seller extends User {
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Product> products = new ArrayList<>();
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "business_address_id")
     private Address businessAddress;
 
     @Override
-    public String getUserType() {
-        return "SELLER";
+    public UserType getUserType() {
+        return UserType.SELLER;
     }
 }

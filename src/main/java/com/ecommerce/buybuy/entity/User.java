@@ -1,5 +1,6 @@
 package com.ecommerce.buybuy.entity;
 
+import com.ecommerce.buybuy.constant.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -58,13 +59,13 @@ public class User implements UserDetails {
     private List<Payment> payments = new ArrayList<>();
 
 
-    public String getUserType() {
+    public UserType getUserType() {
         return null;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + getUserType()));
+        return Collections.singletonList(new SimpleGrantedAuthority(getUserType().getRole()));
     }
 
     @Override

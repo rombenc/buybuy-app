@@ -13,5 +13,4 @@ public class SellerRegisterRequest extends UserRegisterRequest {
     private String storeDescription;
     @NotBlank(message = "Business registration number is required")
     private String businessRegistrationNumber;
-    private Address businessAddress;
 }

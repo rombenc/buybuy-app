@@ -1,6 +1,7 @@
 package com.ecommerce.buybuy.entity;
 
 import com.ecommerce.buybuy.constant.AdminLevel;
+import com.ecommerce.buybuy.constant.UserType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class Admin extends User{
     private Long employeeId;
 
     @Override
-    public String getUserType() {
-        return "ADMIN";
+    public UserType getUserType() {
+        return UserType.ADMIN;
     }
 }

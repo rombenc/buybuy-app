@@ -1,5 +1,6 @@
 package com.ecommerce.buybuy.entity;
 
+import com.ecommerce.buybuy.constant.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,12 +21,13 @@ public class Customer extends User {
     @Column(unique = true)
     private String phoneNumber;
 
-    @Embedded
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 
     @Override
-    public String getUserType() {
-        return "CUSTOMER";
+    public UserType getUserType() {
+        return UserType.CUSTOMER;
     }
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

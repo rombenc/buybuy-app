@@ -20,12 +20,12 @@ public class CustomerServiceImpl {
     private final EmailService emailService;
     private final ProductRepository productRepository;
 
-
     private <T> WebResponse<T> buildErrorResponse(Exception e) {
         return new WebResponse<>(500, "Error: " + e.getMessage(), null);
     }
 
     //todo: checkout and payment
+    //todo: update profile
     //todo: get shop
     //todo: delete account or deactivate account
 }

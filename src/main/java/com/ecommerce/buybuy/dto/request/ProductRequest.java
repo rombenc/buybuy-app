@@ -2,14 +2,18 @@ package com.ecommerce.buybuy.dto.request;
 
 import com.ecommerce.buybuy.entity.Category;
 import com.ecommerce.buybuy.entity.Seller;
+import lombok.Getter;
+import lombok.Setter;
 
-public class CreateProductRequest {
+@Getter
+@Setter
+public class ProductRequest {
     private String productCode;
     private String productName;
     private String imageUrl;
     private Long price;
-    private String stock;
+    private Integer stock;
     private String brand;
-    private Seller seller;
-    private Category category;
+    private String sellerName;
+    private Long categoryId;
 }
